@@ -2,15 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_todo_app/model/todo.dart';
 import 'package:riverpod_todo_app/model/todo_filter.dart';
 import 'package:riverpod_todo_app/provider/todo_notifier.dart';
-import 'package:riverpod_todo_app/service/hive_service.dart';
-
-final hiveServiceProvider = Provider<HiveService>((ref) {
-  return HiveService();
-});
+import 'package:riverpod_todo_app/injection.dart';
 
 final todoProvider = StateNotifierProvider<TodoNotifier, List<Todo>>((ref) {
-  final hiveService = ref.watch(hiveServiceProvider);
-  return TodoNotifier(hiveService);
+  return getIt<TodoNotifier>();
 });
 
 final filterProvider = StateProvider<TodoFilter>((ref) {
@@ -24,6 +19,15 @@ final filteredTodoProvider = Provider<List<Todo>>((ref) {
   return switch (filter) {
     TodoFilter.active => todos.where((t) => !t.isDone).toList(),
     TodoFilter.completed => todos.where((t) => t.isDone).toList(),
+    TodoFilter.overdue =>
+      todos
+          .where(
+            (t) =>
+                !t.isDone &&
+                t.deadline != null &&
+                t.deadline!.isBefore(DateTime.now()),
+          )
+          .toList(),
     TodoFilter.all => todos,
   };
 });

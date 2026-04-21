@@ -1,30 +1,37 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:injectable/injectable.dart';
 import 'dart:math';
 
 import 'package:riverpod_todo_app/model/todo.dart';
-import 'package:riverpod_todo_app/service/hive_service.dart';
+import 'package:riverpod_todo_app/data/repository/todo_repository.dart';
 
+@injectable
 class TodoNotifier extends StateNotifier<List<Todo>> {
-  final HiveService hiveService;
+  final TodoRepository todoRepository;
 
-  TodoNotifier(this.hiveService) : super([]) {
+  TodoNotifier(this.todoRepository) : super([]) {
     _loadTodos();
   }
 
   Future<void> _loadTodos() async {
-    final todos = await hiveService.getAllTodos();
+    final todos = await todoRepository.getAllTodos();
     state = todos;
   }
 
-  Future<void> addTodo(String title) async {
-    final newTodo = Todo(id: Random().nextDouble().toString(), title: title);
+  Future<void> addTodo(String title, {DateTime? deadline, String? description}) async {
+    final newTodo = Todo(
+      id: Random().nextDouble().toString(),
+      title: title,
+      deadline: deadline,
+      description: description,
+    );
 
-    await hiveService.addTodo(newTodo);
+    await todoRepository.addTodo(newTodo);
     state = [...state, newTodo];
   }
 
   Future<void> removeTodo(String id) async {
-    await hiveService.removeTodo(id);
+    await todoRepository.removeTodo(id);
     state = state.where((todo) => todo.id != id).toList();
   }
 
@@ -32,7 +39,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     final updatedTodos = state.map((todo) {
       if (todo.id == id) {
         final updatedTodo = todo.copyWith(isDone: !todo.isDone);
-        hiveService.updateTodo(updatedTodo);
+        todoRepository.updateTodo(updatedTodo);
         return updatedTodo;
       }
       return todo;
