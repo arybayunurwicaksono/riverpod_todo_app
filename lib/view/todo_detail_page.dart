@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_todo_app/model/todo.dart';
 import 'package:riverpod_todo_app/provider/todo_provider.dart';
+import 'package:riverpod_todo_app/utils/todo_extension.dart';
 
 class TodoDetailPage extends ConsumerWidget {
   final String todoId;
@@ -36,27 +37,20 @@ class TodoDetailPage extends ConsumerWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: todo.isDone ? Colors.green[50] : Colors.blue[50],
+                color: todo.backgroundColor,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: todo.isDone ? Colors.green[200]! : Colors.blue[200]!,
-                  width: 2,
-                ),
+                border: Border.all(color: todo.highlightColor!, width: 2),
               ),
               child: Column(
                 children: [
-                  Icon(
-                    todo.isDone ? Icons.check_circle : Icons.pending,
-                    size: 48,
-                    color: todo.isDone ? Colors.green : Colors.blue,
-                  ),
+                  Icon(todo.detailIcon, size: 48, color: todo.iconColor),
                   const SizedBox(height: 12),
                   Text(
-                    todo.isDone ? 'Completed' : 'In Progress',
+                    todo.detailText ?? '',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: todo.isDone ? Colors.green[800] : Colors.blue[800],
+                      color: todo.textColor,
                     ),
                   ),
                 ],
