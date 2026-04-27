@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:riverpod_todo_app/model/todo.dart';
+import 'package:todo_ai/model/todo.dart';
 
 extension TodoExtension on Todo {
   bool get isOverdue {

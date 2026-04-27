@@ -1,4 +1,4 @@
-import 'package:riverpod_todo_app/model/todo.dart';
+import 'package:todo_ai/model/todo.dart';
 
 abstract class TodoRepository {
   Future<List<Todo>> getAllTodos();

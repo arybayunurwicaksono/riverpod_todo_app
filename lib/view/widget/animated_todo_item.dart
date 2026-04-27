@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_todo_app/provider/todo_provider.dart';
-import 'package:riverpod_todo_app/view/widget/todo_card.dart';
+import 'package:todo_ai/provider/todo_provider.dart';
+import 'package:todo_ai/view/widget/todo_card.dart';
 
 class AnimatedTodoItem extends ConsumerWidget {
   final dynamic todo;

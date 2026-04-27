@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
-import 'package:riverpod_todo_app/data/service/hive_service.dart';
-import 'injection.config.dart';
+import 'package:todo_ai/data/service/hive_service.dart';
+import 'package:todo_ai/injection.config.dart';
 
 final getIt = GetIt.instance;
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:riverpod_todo_app/provider/todo_provider.dart';
+import 'package:todo_ai/provider/todo_provider.dart';
 
 class AddTodoPage extends ConsumerStatefulWidget {
   const AddTodoPage({super.key});
@@ -39,13 +39,15 @@ class _AddTodoPageState extends ConsumerState<AddTodoPage> {
   void _saveTodo() {
     final title = _titleController.text.trim();
     if (title.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Title cannot be empty')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Title cannot be empty')));
       return;
     }
 
-    ref.read(todoProvider.notifier).addTodo(
+    ref
+        .read(todoProvider.notifier)
+        .addTodo(
           title,
           deadline: _selectedDate,
           description: _descriptionController.text.trim(),
@@ -57,10 +59,7 @@ class _AddTodoPageState extends ConsumerState<AddTodoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add New Todo'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Add New Todo'), centerTitle: true),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -95,7 +94,10 @@ class _AddTodoPageState extends ConsumerState<AddTodoPage> {
               onTap: () => _selectDate(context),
               borderRadius: BorderRadius.circular(12),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 16,
+                ),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(12),
@@ -110,7 +112,9 @@ class _AddTodoPageState extends ConsumerState<AddTodoPage> {
                           : 'Deadline: ${_selectedDate!.year}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.day.toString().padLeft(2, '0')}',
                       style: TextStyle(
                         fontSize: 16,
-                        color: _selectedDate == null ? Colors.grey[600] : Colors.black,
+                        color: _selectedDate == null
+                            ? Colors.grey[600]
+                            : Colors.black,
                       ),
                     ),
                     const Spacer(),

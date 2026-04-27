@@ -2,8 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:injectable/injectable.dart';
 import 'dart:math';
 
-import 'package:riverpod_todo_app/model/todo.dart';
-import 'package:riverpod_todo_app/data/repository/todo_repository.dart';
+import 'package:todo_ai/model/todo.dart';
+import 'package:todo_ai/data/repository/todo_repository.dart';
 
 @injectable
 class TodoNotifier extends StateNotifier<List<Todo>> {
@@ -18,7 +18,11 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     state = todos;
   }
 
-  Future<void> addTodo(String title, {DateTime? deadline, String? description}) async {
+  Future<void> addTodo(
+    String title, {
+    DateTime? deadline,
+    String? description,
+  }) async {
     final newTodo = Todo(
       id: Random().nextDouble().toString(),
       title: title,

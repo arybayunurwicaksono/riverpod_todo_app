@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
-import 'package:riverpod_todo_app/model/todo.dart';
-import 'package:riverpod_todo_app/data/service/hive_service.dart';
-import 'package:riverpod_todo_app/data/repository/todo_repository.dart';
+import 'package:todo_ai/model/todo.dart';
+import 'package:todo_ai/data/service/hive_service.dart';
+import 'package:todo_ai/data/repository/todo_repository.dart';
 
 @LazySingleton(as: TodoRepository)
 class TodoRepositoryImpl implements TodoRepository {
